@@ -94,6 +94,12 @@ models:
               arguments:
                 to: ref('dim_supplier')
                 field: supplier_key
+      - name: final_price
+        tests:
+          - positive_value
+      - name: total_cost
+        tests:
+          - positive_value
 
   - name: fct_partsupp
     description: "Fact table de costos y disponibilidad de partes por proveedor"
