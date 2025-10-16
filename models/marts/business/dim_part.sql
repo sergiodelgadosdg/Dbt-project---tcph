@@ -1,6 +1,7 @@
 with part as (
 
     select 
+        {{ dbt_utils.generate_surrogate_key(['part_id'])}} as part_key,
         part_id,
         name,
         brand,
@@ -15,6 +16,7 @@ with part as (
 clean_part as (
 
     select
+        part_key,
         part_id,
         name,
         regexp_replace(brand, '[^0-9]', '')::int as brand_id,

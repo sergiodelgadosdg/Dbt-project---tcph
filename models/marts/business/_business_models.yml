@@ -1,0 +1,118 @@
+version: 2
+
+models:
+
+  # =======================
+  # Dimensions
+  # =======================
+
+  - name: dim_customer
+    columns:
+      - name: customer_key
+        tests:
+          - not_null
+          - unique
+  - name: dim_location
+    columns:
+      - name: nation_key
+        tests:
+          - not_null
+          - unique
+  - name: dim_part
+    columns:
+      - name: part_key
+        tests:
+          - not_null
+          - unique
+  - name: dim_supplier
+    columns:
+      - name: supplier_key
+        tests:
+          - not_null
+          - unique
+  - name: dim_date
+    columns:
+      - name: date_id
+        tests:
+          - not_null
+          - unique
+      - name: full_date
+        tests:
+          - not_null
+          - unique
+
+  # =======================
+  # Fact Tables
+  # =======================
+
+  - name: fct_orders
+    description: "Fact table de órdenes con métricas finales"
+    columns:
+      - name: orders_key
+        tests:
+          - not_null
+          - unique
+      - name: customer_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+      - name: nation_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_nation')
+                field: nation_key
+      - name: part_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_part')
+                field: part_key
+      - name: order_date
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: full_date
+      - name: ship_date
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: full_date
+      - name: supplier_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_supplier')
+                field: supplier_key
+
+  - name: fct_partsupp
+    description: "Fact table de costos y disponibilidad de partes por proveedor"
+    columns:
+      - name: partsupp_key
+        tests:
+          - not_null
+          - unique
+      - name: part_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_part')
+                field: part_key
+      - name: supplier_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_supplier')
+                field: supplier_key
