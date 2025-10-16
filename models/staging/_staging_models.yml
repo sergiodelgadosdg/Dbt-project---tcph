@@ -2,19 +2,24 @@ version: 2
 
 models:
   - name: stg_customer
-    description: "Datos de clientes, staging"
+    description: "Datos de clientes, capa staging"
+    config:
+      tags: ["staging", "customer"]
     columns:
       - name: customer_id
+        description: "Identificador único del cliente"
         tests:
           - not_null
           - unique
       - name: nation_id
+        description: "Referencia a la nación del cliente"
         tests:
           - relationships:
               arguments:
                 field: nation_id
                 to: ref('stg_nation')
       - name: mkt_segment
+        description: "Segmento de mercado del cliente"
         tests:
           - accepted_values:
               arguments:
@@ -26,19 +31,24 @@ models:
                   - Furniture
 
   - name: stg_orders
-    description: "Datos de órdenes, staging"
+    description: "Datos de órdenes, capa staging"
+    config:
+      tags: ["staging", "orders"]
     columns:
       - name: order_id
+        description: "Identificador único de la orden"
         tests:
           - not_null
           - unique
       - name: customer_id
+        description: "Referencia al cliente que realizó la orden"
         tests:
           - relationships:
               arguments:
                 field: customer_id
                 to: ref('stg_customer')
       - name: order_status
+        description: "Estado de la orden"
         tests:
           - accepted_values:
               arguments:
@@ -47,17 +57,22 @@ models:
                   - F
                   - O
       - name: order_date
+        description: "Fecha de la orden"
         tests:
           - not_null
           - valid_date
       - name: total_price
+        description: "Precio total de la orden"
         tests:
           - positive_value
 
   - name: stg_lineitem
-    description: "Datos de line items, staging"
+    description: "Datos de line items, capa staging"
+    config:
+      tags: ["staging", "lineitem"]
     columns:
       - name: order_id
+        description: "Referencia a la orden"
         tests:
           - not_null
           - relationships:
@@ -65,6 +80,7 @@ models:
                 field: order_id
                 to: ref('stg_orders')
       - name: part_id
+        description: "Referencia a la parte"
         tests:
           - not_null
           - relationships:
@@ -72,6 +88,7 @@ models:
                 field: part_id
                 to: ref('stg_part')
       - name: supplier_id
+        description: "Referencia al proveedor"
         tests:
           - not_null
           - relationships:
@@ -79,12 +96,15 @@ models:
                 field: supplier_id
                 to: ref('stg_supplier')
       - name: line_number
+        description: "Número de línea del item en la orden"
         tests:
           - not_null
       - name: quantity
+        description: "Cantidad pedida"
         tests:
           - positive_value
       - name: return_flag
+        description: "Indicador de devolución"
         tests:
           - accepted_values:
               arguments:
@@ -93,6 +113,7 @@ models:
                   - N
                   - A
       - name: line_status
+        description: "Estado de la línea"
         tests:
           - accepted_values:
               arguments:
@@ -100,47 +121,71 @@ models:
                   - F
                   - O
       - name: extended_price
+        description: "Precio extendido de la línea"
         tests:
           - positive_value
       - name: discount
+        description: "Descuento aplicado"
         tests:
           - positive_value
       - name: tax
+        description: "Impuesto aplicado"
         tests:
           - positive_value
       - name: ship_date
+        description: "Fecha de envío"
         tests:
           - valid_date
       - name: commit_date
+        description: "Fecha de compromiso de envío"
         tests:
           - valid_date
       - name: receipt_date
+        description: "Fecha de recepción del pedido"
         tests:
           - valid_date
 
   - name: stg_part
-    description: "Datos de partes, staging"
+    description: "Datos de partes/productos, capa staging"
+    config:
+      tags: ["staging", "part"]
     columns:
       - name: part_id
+        description: "Identificador único de la parte"
         tests:
           - not_null
           - unique
       - name: size
+        description: "Tamaño de la parte"
         tests:
           - positive_value
       - name: retail_price
+        description: "Precio de venta minorista"
         tests:
           - positive_value
+      - name: name
+        description: "Nombre de la parte"
+      - name: brand
+        description: "Marca de la parte"
+      - name: type
+        description: "Tipo de parte"
+      - name: container
+        description: "Tipo de envase"
 
   - name: stg_supplier
-    description: "Datos de proveedores, staging"
+    description: "Datos de proveedores, capa staging"
+    config:
+      tags: ["staging", "supplier"]
     columns:
       - name: supplier_id
+        description: "Identificador único del proveedor"
         tests:
           - not_null
           - unique
       - name: name
+        description: "Nombre del proveedor"
       - name: nation_id
+        description: "Referencia a la nación del proveedor"
         tests:
           - relationships:
               arguments:
@@ -148,9 +193,12 @@ models:
                 to: ref('stg_nation')
 
   - name: stg_partsupp
-    description: "Datos de partsupp, staging"
+    description: "Datos de partsupp, capa staging"
+    config:
+      tags: ["staging", "partsupp"]
     columns:
       - name: part_id
+        description: "Referencia a la parte"
         tests:
           - not_null
           - relationships:
@@ -158,6 +206,7 @@ models:
                 field: part_id
                 to: ref('stg_part')
       - name: supplier_id
+        description: "Referencia al proveedor"
         tests:
           - not_null
           - relationships:
@@ -165,20 +214,26 @@ models:
                 field: supplier_id
                 to: ref('stg_supplier')
       - name: availability
+        description: "Cantidad de partes disponibles"
         tests:
           - positive_value
       - name: supply_cost
+        description: "Coste de la parte"
         tests:
           - positive_value
 
   - name: stg_nation
-    description: "Datos de naciones, staging"
+    description: "Datos de naciones, capa staging"
+    config:
+      tags: ["staging", "nation"]
     columns:
       - name: nation_id
+        description: "Identificador único de la nación"
         tests:
           - not_null
           - unique
       - name: region_id
+        description: "Referencia a la región"
         tests:
           - not_null
           - relationships:
@@ -187,9 +242,12 @@ models:
                 to: ref('stg_region')
 
   - name: stg_region
-    description: "Datos de regiones, staging"
+    description: "Datos de regiones, capa staging"
+    config:
+      tags: ["staging", "region"]
     columns:
       - name: region_id
+        description: "Identificador único de la región"
         tests:
           - not_null
           - unique
