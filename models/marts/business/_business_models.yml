@@ -7,36 +7,61 @@ models:
   # =======================
 
   - name: dim_customer
+    description: "Dimensión de clientes enriquecida para análisis de negocio, basada en stg_customer."
+    config:
+      tags: ["business", "dimension", "customer"]
     columns:
       - name: customer_key
+        description: "Clave surrogate única generada para cada cliente."
         tests:
           - not_null
           - unique
+
   - name: dim_location
+    description: "Dimensión de ubicaciones, construida a partir de stg_region y stg_nation."
+    config:
+      tags: ["business", "dimension", "location"]
     columns:
       - name: nation_key
+        description: "Clave surrogate única para cada nación."
         tests:
           - not_null
           - unique
+
   - name: dim_part
+    description: "Dimensión de productos, enriquecida para análisis de ventas."
+    config:
+      tags: ["business", "dimension", "part"]
     columns:
       - name: part_key
+        description: "Clave surrogate única para cada producto/parte."
         tests:
           - not_null
           - unique
+
   - name: dim_supplier
+    description: "Dimensión de proveedores enriquecida para análisis de abastecimiento."
+    config:
+      tags: ["business", "dimension", "supplier"]
     columns:
       - name: supplier_key
+        description: "Clave surrogate única para cada proveedor."
         tests:
           - not_null
           - unique
+
   - name: dim_date
+    description: "Dimensión de fechas para análisis temporal."
+    config:
+      tags: ["business", "dimension", "date"]
     columns:
       - name: date_id
+        description: "Clave surrogate única para cada fecha."
         tests:
           - not_null
           - unique
       - name: full_date
+        description: "Fecha completa en formato YYYY-MM-DD."
         tests:
           - not_null
           - unique
@@ -46,13 +71,17 @@ models:
   # =======================
 
   - name: fct_orders
-    description: "Fact table de órdenes con métricas finales"
+    description: '{{ doc("fct_orders_description") }}'
+    config:
+      tags: ["business", "fact", "orders"]
     columns:
       - name: orders_key
+        description: "Clave surrogate única para cada línea de pedido."
         tests:
           - not_null
           - unique
       - name: customer_key
+        description: "Referencia al cliente de la dimensión dim_customer."
         tests:
           - not_null
           - relationships:
@@ -60,6 +89,7 @@ models:
                 to: ref('dim_customer')
                 field: customer_key
       - name: nation_key
+        description: "Referencia a la nación del cliente, vinculada a dim_nation."
         tests:
           - not_null
           - relationships:
@@ -67,6 +97,7 @@ models:
                 to: ref('dim_nation')
                 field: nation_key
       - name: part_key
+        description: "Referencia al producto/parte de dim_part."
         tests:
           - not_null
           - relationships:
@@ -74,6 +105,7 @@ models:
                 to: ref('dim_part')
                 field: part_key
       - name: order_date
+        description: "Fecha de la orden, vinculada a dim_date."
         tests:
           - not_null
           - relationships:
@@ -81,6 +113,7 @@ models:
                 to: ref('dim_date')
                 field: full_date
       - name: ship_date
+        description: "Fecha de envío, vinculada a dim_date."
         tests:
           - not_null
           - relationships:
@@ -88,21 +121,34 @@ models:
                 to: ref('dim_date')
                 field: full_date
       - name: supplier_key
+        description: "Referencia al proveedor de dim_supplier."
         tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('dim_supplier')
                 field: supplier_key
+      - name: final_price
+        description: "Precio final de la orden."
+        tests:
+          - positive_value
+      - name: total_cost
+        description: "Costo total asociado a la orden."
+        tests:
+          - positive_value
 
   - name: fct_partsupp
-    description: "Fact table de costos y disponibilidad de partes por proveedor"
+    description: "Tabla de hechos de partsupp, combinación de proveedores y sus partes disponibles con sus costes."
+    config:
+      tags: ["business", "fact", "partsupp"]
     columns:
       - name: partsupp_key
+        description: "Clave surrogate única para cada combinación parte-proveedor."
         tests:
           - not_null
           - unique
       - name: part_key
+        description: "Referencia al producto/parte de dim_part."
         tests:
           - not_null
           - relationships:
@@ -110,6 +156,7 @@ models:
                 to: ref('dim_part')
                 field: part_key
       - name: supplier_key
+        description: "Referencia al proveedor de dim_supplier."
         tests:
           - not_null
           - relationships:

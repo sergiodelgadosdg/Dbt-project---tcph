@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: int_location
+    description: "Tabla intermedia que une regiones y naciones, limpia y estandarizada, para ser usada en la capa de dimensión."
+
+    config:
+      tags: ["intermediate", "nation", "region", "location"]
+
+  - name: int_orders
+    description: "Tabla intermedia que une órdenes, clientes, line items y partsupp, con campos estandarizados y cálculos preliminares, lista para la capa de negocio."
+
+    config:
+      tags: ["intermediate", "orders", "customers", "partsupp", "lineitem"]

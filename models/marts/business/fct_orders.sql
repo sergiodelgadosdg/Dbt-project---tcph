@@ -1,9 +1,10 @@
 {{ 
     config(
         materialized='incremental',
-        unique_key='order_id',
+        unique_key='orders_key',
         incremental_strategy='merge',
-        on_schema_change='sync'
+        on_schema_change='sync',
+        post_hook= "grant select on {{ this }} to role SYSADMIN"
     )
 }}
 
