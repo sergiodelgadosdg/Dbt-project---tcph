@@ -12,7 +12,7 @@ transformed as (
         l_partkey as part_id,
         l_suppkey as supplier_id,
         l_linenumber as line_number,
-        l_quantity as quantity,
+        cast(l_quantity as integer) as quantity,
         l_extendedprice as extended_price,
         l_discount as discount,
         l_tax as tax,

@@ -25,6 +25,6 @@ models:
 
     business:
       +schema: PL_BUSINESS
-      +materialized: view
+      +materialized: table
 flags:
   require_generic_test_arguments_property: true

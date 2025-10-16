@@ -1,6 +1,7 @@
 with partsupp as (
 
-    select 
+    select
+        {{ dbt_utils.generate_surrogate_key(['part_id', 'supplier_id'])}} as partsupp_key,
         part_id,
         supplier_id,
         supply_cost,
