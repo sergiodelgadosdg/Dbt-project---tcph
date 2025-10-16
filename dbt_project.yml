@@ -19,12 +19,13 @@ models:
       +schema: PL_STAGING
       +materialized: table
 
-    intermediate:
-      +schema: PL_TRANSFORMATION
-      +materialized: view
+    +meta:
+      intermediate:
+        +schema: PL_TRANSFORMATION
+        +materialized: view
 
-    business:
-      +schema: PL_BUSINESS
-      +materialized: table
+      business:
+        +schema: PL_BUSINESS
+        +materialized: table
 flags:
   require_generic_test_arguments_property: true

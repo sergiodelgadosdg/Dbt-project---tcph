@@ -14,7 +14,7 @@ models:
           - unique
   - name: dim_location
     columns:
-      - name: location_key
+      - name: nation_key
         tests:
           - not_null
           - unique
@@ -36,6 +36,10 @@ models:
         tests:
           - not_null
           - unique
+      - name: full_date
+        tests:
+          - not_null
+          - unique
 
   # =======================
   # Fact Tables
@@ -52,32 +56,44 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_customer')
-              field: customer_key
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+      - name: nation_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_nation')
+                field: nation_key
       - name: part_key
         tests:
           - not_null
           - relationships:
-              to: ref('dim_part')
-              field: part_key
-      - name: order_date_key
+              arguments:
+                to: ref('dim_part')
+                field: part_key
+      - name: order_date
         tests:
           - not_null
           - relationships:
-              to: ref('dim_date')
-              field: date_id
-      - name: ship_date_key
+              arguments:
+                to: ref('dim_date')
+                field: full_date
+      - name: ship_date
         tests:
           - not_null
           - relationships:
-              to: ref('dim_date')
-              field: date_id
+              arguments:
+                to: ref('dim_date')
+                field: full_date
       - name: supplier_key
         tests:
           - not_null
           - relationships:
-              to: ref('dim_supplier')
-              field: supplier_key
+              arguments:
+                to: ref('dim_supplier')
+                field: supplier_key
 
   - name: fct_partsupp
     description: "Fact table de costos y disponibilidad de partes por proveedor"
@@ -90,11 +106,13 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_part')
-              field: part_key
+              arguments:
+                to: ref('dim_part')
+                field: part_key
       - name: supplier_key
         tests:
           - not_null
           - relationships:
-              to: ref('dim_supplier')
-              field: supplier_key
+              arguments:
+                to: ref('dim_supplier')
+                field: supplier_key
