@@ -3,7 +3,8 @@
         materialized='incremental',
         unique_key='order_id',
         incremental_strategy='merge',
-        on_schema_change='sync'
+        on_schema_change='sync',
+        post_hook= "grant select on {{ this }} to role SYSADMIN"
     )
 }}
 
