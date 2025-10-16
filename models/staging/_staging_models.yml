@@ -49,7 +49,7 @@ models:
       - name: order_date
         tests:
           - not_null
-          - date_after_1992
+          - valid_date
       - name: total_price
         tests:
           - positive_value
@@ -110,13 +110,13 @@ models:
           - positive_value
       - name: ship_date
         tests:
-          - date_after_1992
+          - valid_date
       - name: commit_date
         tests:
-          - date_after_1992
+          - valid_date
       - name: receipt_date
         tests:
-          - date_after_1992
+          - valid_date
 
   - name: stg_part
     description: "Datos de partes, staging"
