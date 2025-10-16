@@ -19,7 +19,7 @@ models:
       +schema: PL_STAGING
       +materialized: table
 
-    +meta:
+    marts:
       intermediate:
         +schema: PL_TRANSFORMATION
         +materialized: view
