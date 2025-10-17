@@ -1,16 +1,24 @@
 version: 2
 
 sources:
-  - name: tpch_sf1               
+  - name: tpch_sf1
+    description: "Dataset de ejemplo TPCH SF1 proporcionado por Snowflake."
     database: SNOWFLAKE_SAMPLE_DATA
-    schema: TPCH_SF1             
+    schema: TPCH_SF1
     tables:
       - name: customer
-      - name: lineitem
-      - name: nation
+        description: "Tabla de clientes con información de contacto y segmento de mercado."
       - name: orders
+        description: "Tabla de órdenes realizadas por los clientes."
+      - name: lineitem
+        description: "Tabla de los line items de cada orden."
       - name: part
+        description: "Tabla de partes/productos disponibles para venta."
       - name: partsupp
+        description: "Tabla de la relación partes-proveedor y sus costos."
+      - name: nation
+        description: "Tabla de naciones para clasificación geográfica."
       - name: region
+        description: "Tabla de regiones, cada nación pertenece a una región."
       - name: supplier
-
+        description: "Tabla de proveedores que suministran las partes."
