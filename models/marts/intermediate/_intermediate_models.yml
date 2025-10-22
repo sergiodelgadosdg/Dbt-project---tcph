@@ -8,6 +8,9 @@ models:
     columns:
       - name: nation_id
         description: "Identificador único de la nación."
+        tests:
+          - not_null
+          - unique
       - name: nation_name
         description: "Nombre de la nación."
       - name: region_id
@@ -22,16 +25,28 @@ models:
     columns:
       - name: order_id
         description: "Identificador único de la orden."
+        tests:
+          - not_null
       - name: line_number
         description: "Número de línea dentro de la orden."
+        tests:
+          - not_null
       - name: part_id
         description: "Identificador del producto/parte."
+        tests:
+          - not_null
       - name: supplier_id
         description: "Identificador del proveedor que suministra la parte."
+        tests:
+          - not_null
       - name: customer_id
         description: "Identificador del cliente que realizó la orden."
+        tests:
+          - not_null
       - name: nation_id
         description: "Identificador de la nación del cliente."
+        tests:
+          - not_null
       - name: quantity
         description: "Cantidad de items en la línea."
       - name: extended_price
