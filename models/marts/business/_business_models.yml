@@ -81,7 +81,7 @@ models:
           - not_null
           - unique
       - name: customer_key
-        description: "Referencia al cliente de la dimensión dim_customer."
+        description: "Referencia a cada cliente de la dimensión dim_customer."
         tests:
           - not_null
           - relationships:

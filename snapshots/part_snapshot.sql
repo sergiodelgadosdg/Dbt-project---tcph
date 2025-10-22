@@ -4,7 +4,7 @@
             target_schema='snapshots',
             unique_key='part_id',
             strategy='check',
-            check_cols=['name', 'brand_id', 'category', 'finish', 'material', 'size', 'container', 'retail_price']
+            check_cols=['name', 'brand', 'type', 'size', 'container', 'retail_price']
         )
     }}
 
