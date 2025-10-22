@@ -8,6 +8,6 @@
         )
     }}
 
-    select * from {{ ref('dim_supplier') }}
+    select * from {{ ref('stg_supplier') }}
 
 {% endsnapshot %}
