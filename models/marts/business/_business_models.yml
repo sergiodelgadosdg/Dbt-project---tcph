@@ -89,12 +89,12 @@ models:
                 to: ref('dim_customer')
                 field: customer_key
       - name: nation_key
-        description: "Referencia a la nación del cliente, vinculada a dim_nation."
+        description: "Referencia a la nación del cliente, vinculada a dim_location."
         tests:
           - not_null
           - relationships:
               arguments:
-                to: ref('dim_nation')
+                to: ref('dim_location')
                 field: nation_key
       - name: part_key
         description: "Referencia al producto/parte de dim_part."
