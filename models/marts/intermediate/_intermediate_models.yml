@@ -3,12 +3,62 @@ version: 2
 models:
   - name: int_location
     description: "Tabla intermedia que une regiones y naciones, limpia y estandarizada, para ser usada en la capa de dimensión."
-
     config:
       tags: ["intermediate", "nation", "region", "location"]
+    columns:
+      - name: nation_id
+        description: "Identificador único de la nación."
+      - name: nation_name
+        description: "Nombre de la nación."
+      - name: region_id
+        description: "Identificador único de la región."
+      - name: region_name
+        description: "Nombre de la región."
 
   - name: int_orders
     description: "Tabla intermedia que une órdenes, clientes, line items y partsupp, con campos estandarizados y cálculos preliminares, lista para la capa de negocio."
-
     config:
       tags: ["intermediate", "orders", "customers", "partsupp", "lineitem"]
+    columns:
+      - name: order_id
+        description: "Identificador único de la orden."
+      - name: line_number
+        description: "Número de línea dentro de la orden."
+      - name: part_id
+        description: "Identificador del producto/parte."
+      - name: supplier_id
+        description: "Identificador del proveedor que suministra la parte."
+      - name: customer_id
+        description: "Identificador del cliente que realizó la orden."
+      - name: nation_id
+        description: "Identificador de la nación del cliente."
+      - name: quantity
+        description: "Cantidad de items en la línea."
+      - name: extended_price
+        description: "Precio extendido de la línea antes de descuentos e impuestos."
+      - name: discount
+        description: "Porcentaje de descuento aplicado a la línea."
+      - name: tax
+        description: "Porcentaje de impuesto aplicado a la línea."
+      - name: return_flag
+        description: "Indicador de devolución de la línea."
+      - name: line_status
+        description: "Estado de la línea de pedido."
+      - name: ship_date
+        description: "Fecha de envío de la línea."
+      - name: commit_date
+        description: "Fecha de compromiso de la línea."
+      - name: receipt_date
+        description: "Fecha de recepción de la línea."
+      - name: ship_instruct
+        description: "Instrucciones de envío de la línea."
+      - name: ship_mode
+        description: "Modo de envío de la línea."
+      - name: order_date
+        description: "Fecha en que se realizó la orden."
+      - name: clerk_id
+        description: "Identificador del empleado que gestionó la orden."
+      - name: order_priority
+        description: "Prioridad de la orden (convertida a entero)."
+      - name: supply_cost
+        description: "Costo de suministro de la parte por el proveedor."
